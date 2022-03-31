@@ -3,7 +3,7 @@ package pl.gluttonScrooge.database
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import org.jetbrains.exposed.sql.Database
-import java.net.URL
+import java.net.URI
 import java.util.*
 
 object DatabaseFactory {
@@ -19,7 +19,7 @@ object DatabaseFactory {
             config.username = System.getenv("DATABASE_USERNAME")
             config.password = System.getenv("DATABASE_PASSWORD")
         } else {
-            val dbUri = URL(System.getenv("DATABASE_URL"))
+            val dbUri = URI(System.getenv("DATABASE_URL"))
             val username = dbUri.userInfo.split(":").toTypedArray()[0]
             val password = dbUri.userInfo.split(":").toTypedArray()[1]
             val dbUrl = "jdbc:postgresql://" + dbUri.host + ":" + dbUri.port + dbUri.path + "?sslmode=require" + "&user=$username&password=$password"
