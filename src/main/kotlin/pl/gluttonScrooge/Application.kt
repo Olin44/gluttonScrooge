@@ -2,13 +2,14 @@ package pl.gluttonScrooge
 
 import io.ktor.application.*
 import io.ktor.features.*
+import io.ktor.http.*
 import io.ktor.locations.*
 import io.ktor.request.*
 import io.ktor.response.*
-import io.ktor.routing.*
 import io.ktor.serialization.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
+import kotlinx.serialization.Serializable
 import org.slf4j.event.Level
 import pl.gluttonScrooge.database.DatabaseFactory
 import pl.gluttonScrooge.recipe.registerRecipeRoutes
@@ -16,10 +17,14 @@ import pl.gluttonScrooge.recipe.registerRecipeRoutes
 fun main() {
     DatabaseFactory.init()
     embeddedServer(Netty, port = System.getenv("PORT").toInt(), watchPaths = listOf("classes")) {
-        configureRouting()
         install(Locations)
         install(ContentNegotiation) {
             json()
+        }
+        install(StatusPages) {
+            exception<ParameterConversionException> { cause ->
+                call.respond(HttpStatusCode.BadRequest, ErrorMessageResponse(cause.message, call.request.uri, cause.type))
+            }
         }
         configureHTTP()
         configureLogging()
@@ -27,13 +32,8 @@ fun main() {
     }.start(wait = true)
 }
 
-private fun Application.configureRouting() {
-    routing {
-        get("/") {
-            call.respondText("Hello, world!")
-        }
-    }
-}
+@Serializable
+data class ErrorMessageResponse(val message: String? = "Empty message", val uri: String, val type: String)
 
 fun Application.configureHTTP() {
     install(DefaultHeaders) {

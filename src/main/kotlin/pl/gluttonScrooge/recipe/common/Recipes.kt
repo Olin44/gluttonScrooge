@@ -1,4 +1,4 @@
-package pl.gluttonScrooge.recipe
+package pl.gluttonScrooge.recipe.common
 
 import org.jetbrains.exposed.dao.id.LongIdTable
 
