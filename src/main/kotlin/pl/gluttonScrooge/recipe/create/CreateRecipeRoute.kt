@@ -9,6 +9,7 @@ import pl.gluttonScrooge.database.executeQuery
 import pl.gluttonScrooge.recipe.common.RecipeRepository
 
 fun Route.createRecipeRoute() {
+
     route("/recipes") {
         post {
             val recipeCreateRequest = call.receive<RecipeCreateRequest>()

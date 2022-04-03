@@ -4,4 +4,4 @@ import io.ktor.locations.*
 
 @OptIn(KtorExperimentalLocationsAPI::class)
 @Location("/recipes")
-data class RecipesPagingLocation(val limit: Int, val offset: Long)
+data class ReadPaginatedRecipesLocation(val limit: Int, val offset: Long)

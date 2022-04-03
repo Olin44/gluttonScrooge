@@ -14,6 +14,6 @@ fun Route.deleteRecipeRoute() {
     delete<RecipeIdLocation> { deleteRecipeByIdRequest ->
         val recipe = executeQuery { findRecipeById(deleteRecipeByIdRequest.id) }
         executeQuery { recipe.delete() }
-        call.respond(DeletedResponse("Recipe removed successfully"))
+        call.respond(DeleteResponse("Recipe removed successfully"))
     }
 }

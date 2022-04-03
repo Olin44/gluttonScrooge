@@ -10,7 +10,7 @@ import pl.gluttonScrooge.recipe.common.findRecipeById
 import pl.gluttonScrooge.recipe.read.ReadRecipeResponse
 
 @OptIn(KtorExperimentalLocationsAPI::class)
-fun Route.getRecipeRoute() {
+fun Route.readRecipeRoute() {
 
     get<RecipeIdLocation> { findRecipeByIdRequest ->
         val id = findRecipeByIdRequest.id

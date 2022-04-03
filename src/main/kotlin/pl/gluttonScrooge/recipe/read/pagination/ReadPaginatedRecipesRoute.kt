@@ -9,8 +9,9 @@ import pl.gluttonScrooge.recipe.common.RecipeRepository
 import pl.gluttonScrooge.recipe.read.ReadRecipeResponse
 
 @OptIn(KtorExperimentalLocationsAPI::class)
-fun Route.recipePaginationRoute() {
-    get<RecipesPagingLocation> { recipesPaging ->
+fun Route.readPaginatedRecipesRoute() {
+
+    get<ReadPaginatedRecipesLocation> { recipesPaging ->
         val limit = recipesPaging.limit
         val offset = recipesPaging.offset
         call.respond(executeQuery {
